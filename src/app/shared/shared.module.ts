@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { EmptyComponent, PageNotFoundComponent } from './components/';
+import {
+  EmptyComponent,
+  PageNotFoundComponent,
+  PageContainerComponent,
+  BackButtonComponent,
+  HeaderComponent,
+} from './components/';
 import { WebviewDirective } from './directives/';
 import { LottieModule } from 'ngx-lottie';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +20,14 @@ export function playerFactory() {
 }
 
 @NgModule({
-  declarations: [PageNotFoundComponent, WebviewDirective, EmptyComponent],
+  declarations: [
+    PageNotFoundComponent,
+    WebviewDirective,
+    EmptyComponent,
+    PageContainerComponent,
+    BackButtonComponent,
+    HeaderComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -27,6 +40,9 @@ export function playerFactory() {
     LottieModule,
     AntModule,
     EmptyComponent,
+    PageContainerComponent,
+    BackButtonComponent,
+    HeaderComponent,
   ],
 })
 export class SharedModule {}
