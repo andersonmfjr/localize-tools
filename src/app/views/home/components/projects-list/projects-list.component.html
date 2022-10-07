@@ -1,8 +1,10 @@
 <app-empty *ngIf="isEmpty; else list" title="You don’t have any project">
-  <button nz-button nzSize="large" nzType="primary">
-    <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
-    Create new project
-  </button>
+  <a routerLink="/create-project">
+    <button nz-button nzSize="large" nzType="primary">
+      <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
+      Create new project
+    </button>
+  </a>
 </app-empty>
 
 <ng-template #list> list project </ng-template>

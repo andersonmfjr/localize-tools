@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeModule } from './views/home/home.module';
 
 import { AppComponent } from './app.component';
+import { CreateProjectModule } from './views/create-project/create-project.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { AppComponent } from './app.component';
     CoreModule,
     SharedModule,
     HomeModule,
+    CreateProjectModule,
     AppRoutingModule,
   ],
   providers: [],
