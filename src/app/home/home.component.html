@@ -1,5 +1,12 @@
-<div class="container">
-  <h1 class="title">Home</h1>
+<div class="flex align-center justify-center h-100">
+  <div class="flex flex-column align-center justify-center">
+    <ng-lottie width="300px" [options]="options"></ng-lottie>
 
-  <a routerLink="/detail">Go to details</a>
+    <h1 class="title">You don’t have any project</h1>
+
+    <button mat-flat-button color="primary">
+      <mat-icon>add</mat-icon>
+      Create new project
+    </button>
+  </div>
 </div>

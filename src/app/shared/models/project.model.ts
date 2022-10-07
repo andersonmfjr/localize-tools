@@ -11,4 +11,5 @@ export class Project {
   };
   locales: Locale[];
   useXlff: boolean;
+  isDefault: boolean;
 }
