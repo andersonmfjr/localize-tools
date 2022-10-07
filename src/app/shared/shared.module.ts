@@ -7,7 +7,7 @@ import { LottieModule } from 'ngx-lottie';
 import { FormsModule } from '@angular/forms';
 
 import player from 'lottie-web';
-import { MaterialModule } from './material.module';
+import { AntModule } from './ant.module';
 
 export function playerFactory() {
   return player;
@@ -18,9 +18,9 @@ export function playerFactory() {
   imports: [
     CommonModule,
     FormsModule,
-    MaterialModule,
+    AntModule,
     LottieModule.forRoot({ player: playerFactory }),
   ],
-  exports: [WebviewDirective, FormsModule, MaterialModule, LottieModule],
+  exports: [WebviewDirective, FormsModule, LottieModule, AntModule],
 })
 export class SharedModule {}

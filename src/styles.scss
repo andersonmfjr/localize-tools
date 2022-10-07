@@ -1,4 +1,4 @@
-@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "~ng-zorro-antd/ng-zorro-antd.min.css";
 
 /* You can add global styles to this file, and also import other style files */
 html,
@@ -6,7 +6,9 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: "Roboto", sans-serif;
+  font-family: Avenir, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji", sans-serif;
 }
 
 .flex {
