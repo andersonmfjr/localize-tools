@@ -45,7 +45,7 @@
     <nz-form-control nzErrorTip="Please select your default locale JSON">
       <div class="flex align-center">
         <nz-upload [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload">
-          <button nz-button>
+          <button nz-button type="button">
             <span nz-icon nzType="upload"></span>
             Click to Upload
           </button>
@@ -111,6 +111,7 @@
   <nz-form-item>
     <nz-form-control>
       <button
+        type="button"
         nz-button
         nzType="dashed"
         class="w-100"
@@ -130,7 +131,14 @@
     </nz-form-control>
   </nz-form-item>
 
-  <button nz-button nzSize="large" nzType="primary" [disabled]="form.invalid">
+  <button
+    nz-button
+    nzSize="large"
+    nzType="primary"
+    [disabled]="form.invalid || isCreatingProject"
+    type="submit"
+    [nzLoading]="isCreatingProject"
+  >
     <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
     Create new project
   </button>

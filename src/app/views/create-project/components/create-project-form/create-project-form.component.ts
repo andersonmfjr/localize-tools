@@ -6,6 +6,9 @@ import {
 } from '@angular/forms';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import * as path from 'path';
+import { v4 as uuidv4 } from 'uuid';
+import { Project } from '../../../../shared/models/project.model';
+import { Locale } from '../../../../shared/models/locale.model';
 
 type LocaleControl = Array<{ id: number; controlInstance: string }>;
 
@@ -15,6 +18,8 @@ type LocaleControl = Array<{ id: number; controlInstance: string }>;
   styleUrls: ['./create-project-form.component.scss'],
 })
 export class CreateProjectFormComponent implements OnInit {
+  isCreatingProject = false;
+
   locales = [
     {
       label: 'English (United States)',
@@ -61,7 +66,57 @@ export class CreateProjectFormComponent implements OnInit {
     this.addField();
   }
 
-  onSubmit() {}
+  onSubmit() {
+    this.isCreatingProject = true;
+    const id = uuidv4();
+    const formValue = this.form.value;
+    const locales = [];
+
+    Object.keys(formValue).forEach((key) => {
+      if (key.includes('localeSuffix')) {
+        const suffix = this.form.get(key).value;
+        const localeIndex = key.split('-').pop();
+        const localeId = this.form.get(`locale-${localeIndex}`).value;
+        const localeName = this.locales.find(
+          (l) => l.value === localeId
+        )?.label;
+
+        const formattedLocale = {
+          name: localeName,
+          id: localeId,
+          abbreviation: localeId,
+          suffix,
+        };
+
+        locales.push(formattedLocale);
+      }
+    });
+
+    const locale = this.locales.find(
+      (l) => l.value === formValue.defaultLocale
+    );
+    const defaultLocale: Locale = {
+      name: locale.label,
+      id: formValue.defaultLocale,
+      abbreviation: formValue.defaultLocale,
+    };
+
+    const project: Project = {
+      id,
+      name: formValue.name,
+      description: formValue.description || '',
+      defaultLocale,
+      messages: formValue.messages,
+      locales,
+      useXlff: formValue.useXlff,
+    };
+
+    console.log(project);
+
+    setTimeout(() => {
+      this.isCreatingProject = false;
+    }, 1000);
+  }
 
   beforeUpload = (file: NzUploadFile, _fileList: NzUploadFile[]): boolean => {
     const messagesPrefix = path.parse(file.path).name;
@@ -97,7 +152,7 @@ export class CreateProjectFormComponent implements OnInit {
 
     const control = {
       id,
-      controlInstance: `locale${id}`,
+      controlInstance: `locale-${id}`,
     };
     const index = this.projectLocalesControls.push(control);
 
@@ -117,7 +172,7 @@ export class CreateProjectFormComponent implements OnInit {
 
     const control = {
       id,
-      controlInstance: `localeSuffix${id}`,
+      controlInstance: `localeSuffix-${id}`,
     };
     const index = this.projectLocalesSuffixControls.push(control);
 
