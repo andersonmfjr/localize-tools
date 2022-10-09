@@ -10,7 +10,7 @@ import {
 } from './components/';
 import { WebviewDirective } from './directives/';
 import { LottieModule } from 'ngx-lottie';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import player from 'lottie-web';
 import { AntModule } from './ant.module';
@@ -31,12 +31,14 @@ export function playerFactory() {
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     AntModule,
     LottieModule.forRoot({ player: playerFactory }),
   ],
   exports: [
     WebviewDirective,
     FormsModule,
+    ReactiveFormsModule,
     LottieModule,
     AntModule,
     EmptyComponent,
