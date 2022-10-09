@@ -31,6 +31,7 @@ export class CreateProjectFormComponent implements OnInit {
   ];
 
   messagesPath = '';
+  separator = path.sep;
 
   projectLocalesControls: LocaleControl = [];
   projectLocalesSuffixControls: LocaleControl = [];
@@ -145,5 +146,28 @@ export class CreateProjectFormComponent implements OnInit {
       this.projectLocalesSuffixControls.splice(index, 1);
       this.form.removeControl(i.controlInstance);
     }
+  }
+
+  renderProjectLocalePath(
+    localeControl: string,
+    suffixControl: string
+  ): boolean {
+    const localeControlValue = this.form.get(localeControl)?.value;
+    const suffixControlValue = this.form.get(suffixControl)?.value;
+
+    return (
+      localeControlValue &&
+      suffixControlValue &&
+      this.messagesDirectoryControl.value &&
+      this.messagesPrefixControl.value
+    );
+  }
+
+  formatLocalePath(suffixControl: string) {
+    const suffixControlValue = this.form.get(suffixControl)?.value;
+    const messagesDirectory = this.messagesDirectoryControl.value;
+    const messagesPrefix = this.messagesPrefixControl.value;
+    const localeFile = `${messagesPrefix}.${suffixControlValue}.json`;
+    return `Your file should be ${messagesDirectory}${this.separator}${localeFile}`;
   }
 }

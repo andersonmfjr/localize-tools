@@ -94,6 +94,19 @@
         (click)="removeField(control, $event)"
       ></span>
     </div>
+
+    <span
+      class="mt-05"
+      *ngIf="
+        renderProjectLocalePath(
+          control.controlInstance,
+          projectLocalesSuffixControls[i].controlInstance
+        )
+      "
+    >
+      Your locale should be
+      {{ formatLocalePath(projectLocalesSuffixControls[i].controlInstance) }}
+    </span>
   </nz-form-item>
 
   <nz-form-item>
@@ -105,7 +118,7 @@
         (click)="addField($event)"
       >
         <span nz-icon nzType="plus"></span>
-        Add field
+        Add locale
       </button>
     </nz-form-control>
   </nz-form-item>
