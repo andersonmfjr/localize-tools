@@ -9,6 +9,9 @@ import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { Project } from '../../../../shared/models/project.model';
 import { Locale } from '../../../../shared/models/locale.model';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Router } from '@angular/router';
+import { ProjectService } from '../../../../shared/services/project/project.service';
 
 type LocaleControl = Array<{ id: number; controlInstance: string }>;
 
@@ -52,7 +55,12 @@ export class CreateProjectFormComponent implements OnInit {
     useXlff: [false, Validators.required],
   });
 
-  constructor(private fb: UntypedFormBuilder) {}
+  constructor(
+    private fb: UntypedFormBuilder,
+    private messageService: NzMessageService,
+    private router: Router,
+    private projectService: ProjectService
+  ) {}
 
   get messagesDirectoryControl() {
     return this.form.get('messages.directory');
@@ -92,6 +100,11 @@ export class CreateProjectFormComponent implements OnInit {
       }
     });
 
+    if (locales.length === 0) {
+      this.messageService.error('You must add at least one locale');
+      return;
+    }
+
     const locale = this.locales.find(
       (l) => l.value === formValue.defaultLocale
     );
@@ -111,10 +124,12 @@ export class CreateProjectFormComponent implements OnInit {
       useXlff: formValue.useXlff,
     };
 
-    console.log(project);
+    this.projectService.set(project);
 
     setTimeout(() => {
+      this.messageService.success('Project created successfully!');
       this.isCreatingProject = false;
+      this.router.navigateByUrl('/home');
     }, 1000);
   }
 
