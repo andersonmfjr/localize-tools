@@ -12,6 +12,7 @@ import { Locale } from '../../../../shared/models/locale.model';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
 import { ProjectService } from '../../../../shared/services/project/project.service';
+import { LOCALES } from '../../../../shared/helpers/locales';
 
 type LocaleControl = Array<{ id: number; controlInstance: string }>;
 
@@ -23,20 +24,7 @@ type LocaleControl = Array<{ id: number; controlInstance: string }>;
 export class CreateProjectFormComponent implements OnInit {
   isCreatingProject = false;
 
-  locales = [
-    {
-      label: 'English (United States)',
-      value: 'en-US',
-    },
-    {
-      label: 'Portuguese (Brazil)',
-      value: 'pt-BR',
-    },
-    {
-      label: 'Spanish (Spain)',
-      value: 'es-ES',
-    },
-  ];
+  locales = LOCALES;
 
   messagesPath = '';
   separator = path.sep;
