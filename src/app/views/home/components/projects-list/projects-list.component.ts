@@ -9,6 +9,7 @@ import { ProjectService } from '../../../../shared/services/project/project.serv
 })
 export class ProjectsListComponent implements OnInit {
   projects: Project[] = [];
+  searchTerm = '';
 
   constructor(private projectsService: ProjectService) {}
 
@@ -18,5 +19,9 @@ export class ProjectsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.projects = this.projectsService.getAll();
+  }
+
+  onSearchChange() {
+    this.projects = this.projectsService.getAll(this.searchTerm);
   }
 }

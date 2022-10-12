@@ -9,8 +9,55 @@ import { LocalStorageService } from '../local-storage/local-storage.service';
 export class ProjectService {
   constructor(private localStorage: LocalStorageService) {}
 
-  getAll(): Project[] {
-    return this.localStorage.get(CONSTANTS.projects) || [];
+  getAll(search?: string): Project[] {
+    const projects: Project[] = this.localStorage.get(CONSTANTS.projects) || [];
+    if (!search) {
+      return projects;
+    }
+
+    return projects.filter((p) => {
+      const searchLowerCase = search.toLocaleLowerCase();
+      const name = p.name.toLocaleLowerCase().includes(searchLowerCase);
+      const description = p.description
+        ?.toLocaleLowerCase()
+        .includes(searchLowerCase);
+      const defaultLocaleName = p.defaultLocale.name
+        .toLocaleLowerCase()
+        .includes(searchLowerCase);
+      const defaultLocaleAbbr = p.defaultLocale.abbreviation
+        .toLocaleLowerCase()
+        .includes(searchLowerCase);
+      const defaultLocaleId = p.defaultLocale.id
+        .toLocaleLowerCase()
+        .includes(searchLowerCase);
+
+      let locales = false;
+      p.locales?.forEach((l) => {
+        if (locales) {
+          locales = true;
+          return;
+        }
+
+        const localeName = l.name.toLocaleLowerCase().includes(searchLowerCase);
+        const localeAbbr = l.abbreviation
+          .toLocaleLowerCase()
+          .includes(searchLowerCase);
+        const localeId = l.abbreviation
+          .toLocaleLowerCase()
+          .includes(searchLowerCase);
+
+        locales = localeAbbr || localeName || localeId;
+      });
+
+      return (
+        name ||
+        description ||
+        defaultLocaleName ||
+        defaultLocaleId ||
+        defaultLocaleAbbr ||
+        locales
+      );
+    });
   }
 
   getById(id: string): Project {

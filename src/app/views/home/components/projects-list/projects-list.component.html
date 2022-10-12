@@ -1,6 +1,25 @@
+<nz-input-group
+  class="search-container mt-1 mb-1"
+  [nzSuffix]="suffixIconSearch"
+>
+  <input
+    type="text"
+    nz-input
+    placeholder="Search by name, locale, etc"
+    [(ngModel)]="searchTerm"
+    (ngModelChange)="onSearchChange()"
+  />
+</nz-input-group>
+
+<ng-template #suffixIconSearch>
+  <span nz-icon nzType="search"></span>
+</ng-template>
+
 <div *ngIf="isEmpty; else list" class="flex align-center justify-center mt-2">
-  <app-empty title="You don’t have any project">
-    <a routerLink="/create-project">
+  <app-empty
+    [title]="searchTerm ? 'No projects found' : 'You don’t have any project'"
+  >
+    <a routerLink="/create-project" *ngIf="!searchTerm">
       <button nz-button nzSize="large" nzType="primary">
         <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
         Create new project
