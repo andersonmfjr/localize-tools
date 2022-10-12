@@ -1,0 +1,24 @@
+<nz-card [nzActions]="[actionSetting, actionEdit, actionEllipsis]">
+  <nz-card-meta
+    [nzTitle]="project.name"
+    [nzDescription]="project.description || ''"
+  ></nz-card-meta>
+
+  <section class="mt-1 content-block">
+    <article>
+      <span class="bold">Default locale:</span> {{ project.defaultLocale.name }}
+    </article>
+
+    <article><span class="bold">Locales:</span> {{ projectLocales }}</article>
+  </section>
+</nz-card>
+
+<ng-template #actionSetting>
+  <span nz-icon nzType="translation" nzTheme="outline"></span>
+</ng-template>
+<ng-template #actionEdit>
+  <span nz-icon nzType="edit"></span>
+</ng-template>
+<ng-template #actionEllipsis>
+  <span nz-icon nzType="delete" nzTheme="outline"></span>
+</ng-template>

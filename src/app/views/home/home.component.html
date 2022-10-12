@@ -1,3 +1,21 @@
-<div class="flex align-center justify-center h-100">
+<app-page-container>
+  <app-header>
+    <div class="flex align-start justify-space-between w-100">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>
+          <span nz-icon nzType="home" nzTheme="outline"></span>
+          <span>Projects</span>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+
+      <a routerLink="/create-project">
+        <button nz-button nzSize="small" nzType="primary">
+          <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
+          Create new project
+        </button>
+      </a>
+    </div>
+  </app-header>
+
   <app-projects-list></app-projects-list>
-</div>
+</app-page-container>

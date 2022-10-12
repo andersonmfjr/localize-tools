@@ -1,10 +1,18 @@
-<app-empty *ngIf="isEmpty; else list" title="You don’t have any project">
-  <a routerLink="/create-project">
-    <button nz-button nzSize="large" nzType="primary">
-      <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
-      Create new project
-    </button>
-  </a>
-</app-empty>
+<div *ngIf="isEmpty; else list" class="flex align-center justify-center mt-2">
+  <app-empty title="You don’t have any project">
+    <a routerLink="/create-project">
+      <button nz-button nzSize="large" nzType="primary">
+        <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
+        Create new project
+      </button>
+    </a>
+  </app-empty>
+</div>
 
-<ng-template #list> list project </ng-template>
+<ng-template #list>
+  <div class="cards-container">
+    <div class="card" *ngFor="let project of projects">
+      <app-project-card [project]="project"></app-project-card>
+    </div>
+  </div>
+</ng-template>

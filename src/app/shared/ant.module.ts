@@ -11,6 +11,7 @@ import { IconDefinition } from '@ant-design/icons-angular';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzCardModule } from 'ng-zorro-antd/card';
 import {
   PlusCircleOutline,
   HomeOutline,
@@ -20,6 +21,8 @@ import {
   QuestionCircleOutline,
   MinusCircleOutline,
   PlusOutline,
+  DeleteOutline,
+  TranslationOutline,
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -31,6 +34,8 @@ const icons: IconDefinition[] = [
   QuestionOutline,
   QuestionCircleOutline,
   MinusCircleOutline,
+  DeleteOutline,
+  TranslationOutline,
 ];
 
 @NgModule({
@@ -47,6 +52,7 @@ const icons: IconDefinition[] = [
     NzToolTipModule,
     NzCheckboxModule,
     NzMessageModule,
+    NzCardModule,
   ],
   exports: [
     NzButtonModule,
@@ -60,6 +66,7 @@ const icons: IconDefinition[] = [
     NzToolTipModule,
     NzCheckboxModule,
     NzMessageModule,
+    NzCardModule,
   ],
 })
 export class AntModule {}
