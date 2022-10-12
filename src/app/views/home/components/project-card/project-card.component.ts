@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { verifyProjectFiles } from '../../../../shared/helpers/verify-project-files';
 import { Project } from '../../../../shared/models/project.model';
 
 @Component({
@@ -9,6 +10,8 @@ import { Project } from '../../../../shared/models/project.model';
 export class ProjectCardComponent implements OnInit {
   @Input() project: Project;
   @Output() deleted = new EventEmitter<void>();
+
+  projectFiles = { hasErrors: false, errorsMessages: [] };
 
   constructor() {}
 
@@ -33,7 +36,9 @@ export class ProjectCardComponent implements OnInit {
     return locales;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.projectFiles = verifyProjectFiles(this.project);
+  }
 
   deleteProject() {
     this.deleted.emit();

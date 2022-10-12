@@ -6,10 +6,27 @@
 
   <section class="mt-1 content-block">
     <article>
+      <span class="bold">Messages directory:</span>
+      {{ project.messages.directory }}
+    </article>
+
+    <article>
       <span class="bold">Default locale:</span> {{ project.defaultLocale.name }}
     </article>
 
     <article><span class="bold">Locales:</span> {{ projectLocales }}</article>
+
+    <ng-container *ngIf="projectFiles.hasErrors">
+      <nz-divider></nz-divider>
+
+      <div
+        *ngFor="let message of projectFiles.errorsMessages"
+        class="status-danger"
+      >
+        <span nz-icon nzType="alert" nzTheme="outline"></span>
+        <span class="ml-05">{{ message }}</span>
+      </div>
+    </ng-container>
   </section>
 </nz-card>
 
