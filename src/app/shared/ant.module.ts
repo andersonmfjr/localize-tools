@@ -12,6 +12,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import {
   PlusCircleOutline,
   HomeOutline,
@@ -53,6 +54,7 @@ const icons: IconDefinition[] = [
     NzCheckboxModule,
     NzMessageModule,
     NzCardModule,
+    NzPopconfirmModule,
   ],
   exports: [
     NzButtonModule,
@@ -67,6 +69,7 @@ const icons: IconDefinition[] = [
     NzCheckboxModule,
     NzMessageModule,
     NzCardModule,
+    NzPopconfirmModule,
   ],
 })
 export class AntModule {}

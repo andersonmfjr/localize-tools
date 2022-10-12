@@ -7,7 +7,7 @@
     nz-input
     placeholder="Search by name, locale, etc"
     [(ngModel)]="searchTerm"
-    (ngModelChange)="onSearchChange()"
+    (ngModelChange)="searchProjects()"
   />
 </nz-input-group>
 
@@ -31,7 +31,10 @@
 <ng-template #list>
   <div class="cards-container">
     <div class="card" *ngFor="let project of projects">
-      <app-project-card [project]="project"></app-project-card>
+      <app-project-card
+        [project]="project"
+        (deleted)="deleteProject(project.id)"
+      ></app-project-card>
     </div>
   </div>
 </ng-template>
