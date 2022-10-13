@@ -1,4 +1,8 @@
-<nz-card [nzActions]="[actionSetting, actionEdit, actionEllipsis]">
+<nz-card
+  class="pointer"
+  [nzActions]="[actionSetting, actionEdit, actionEllipsis]"
+  (click)="onActionClick(null, 'card')"
+>
   <nz-card-meta
     [nzTitle]="project.name"
     [nzDescription]="project.description || ''"
@@ -31,13 +35,19 @@
 </nz-card>
 
 <ng-template #actionSetting>
-  <span nz-icon nzType="translation" nzTheme="outline"></span>
+  <span
+    nz-icon
+    nzType="translation"
+    nzTheme="outline"
+    (click)="onActionClick($event, 'home')"
+  ></span>
 </ng-template>
 <ng-template #actionEdit>
-  <span nz-icon nzType="edit"></span>
+  <span (click)="onActionClick($event, 'edit')" nz-icon nzType="edit"></span>
 </ng-template>
 <ng-template #actionEllipsis>
   <span
+    (click)="onActionClick($event, 'delete')"
     nz-popconfirm
     nzPopconfirmTitle="Are you sure delete this project?"
     nzPopconfirmPlacement="bottom"

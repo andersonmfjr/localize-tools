@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { verifyProjectFiles } from '../../../../shared/helpers/verify-project-files';
 import { Project } from '../../../../shared/models/project.model';
+import { ProjectService } from '../../../../shared/services/project/project.service';
 
 @Component({
   selector: 'app-project-card',
@@ -13,7 +15,7 @@ export class ProjectCardComponent implements OnInit {
 
   projectFiles = { hasErrors: false, errorsMessages: [] };
 
-  constructor() {}
+  constructor(private projectService: ProjectService, private router: Router) {}
 
   get projectLocales(): string {
     if (this.project.locales.length === 1) {
@@ -42,5 +44,24 @@ export class ProjectCardComponent implements OnInit {
 
   deleteProject() {
     this.deleted.emit();
+  }
+
+  onActionClick(e: Event, type: string) {
+    if (e) {
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }
+
+    switch (type) {
+      case 'edit':
+        this.projectService.selectedProject = this.project;
+        this.router.navigateByUrl('/edit-project');
+        break;
+      case 'home':
+      case 'card':
+        this.projectService.selectedProject = this.project;
+        this.router.navigateByUrl('/project');
+        break;
+    }
   }
 }

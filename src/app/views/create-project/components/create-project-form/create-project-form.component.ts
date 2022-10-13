@@ -112,7 +112,7 @@ export class CreateProjectFormComponent implements OnInit {
       useXlff: formValue.useXlff,
     };
 
-    this.projectService.set(project);
+    this.projectService.add(project);
 
     setTimeout(() => {
       this.messageService.success('Project created successfully!');

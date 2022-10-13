@@ -1,1 +1,22 @@
-<p>edit-project works!</p>
+<ng-container *ngIf="project">
+  <app-page-container>
+    <app-header>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>
+          <a routerLink="/home">
+            <span nz-icon nzType="home" nzTheme="outline"></span>
+            <span>Projects</span>
+          </a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <a routerLink="/project">
+            {{ project.name }}
+          </a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>Editar</nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </app-header>
+
+    <h2 nz-typography>{{ project.name }}</h2>
+  </app-page-container>
+</ng-container>

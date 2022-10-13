@@ -9,6 +9,15 @@ import { LocalStorageService } from '../local-storage/local-storage.service';
 export class ProjectService {
   constructor(private localStorage: LocalStorageService) {}
 
+  get selectedProject(): Project {
+    const id = this.localStorage.get(CONSTANTS.selectedProjectId);
+    return this.getById(id);
+  }
+
+  set selectedProject(project: Project) {
+    this.localStorage.set(CONSTANTS.selectedProjectId, project.id);
+  }
+
   getAll(search?: string): Project[] {
     const projects: Project[] = this.localStorage.get(CONSTANTS.projects) || [];
     if (!search) {
@@ -76,7 +85,7 @@ export class ProjectService {
     return this.localStorage.set(CONSTANTS.projects, newProjects);
   }
 
-  set(project: Project): Project {
+  add(project: Project): Project {
     const projects = this.getAll();
     projects.push(project);
     this.localStorage.set(CONSTANTS.projects, projects);
