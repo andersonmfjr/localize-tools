@@ -17,9 +17,12 @@ import { HomeModule } from './views/home/home.module';
 
 import { AppComponent } from './app.component';
 import { CreateProjectModule } from './views/create-project/create-project.module';
+import { ProjectComponent } from './views/project/project.component';
+import { EditProjectComponent } from './views/edit-project/edit-project.component';
+import { TranslateProjectComponent } from './views/translate-project/translate-project.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ProjectComponent, EditProjectComponent, TranslateProjectComponent],
   imports: [
     BrowserModule,
     FormsModule,
