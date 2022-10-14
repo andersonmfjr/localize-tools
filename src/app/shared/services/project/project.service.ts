@@ -15,7 +15,12 @@ export class ProjectService {
   }
 
   set selectedProject(project: Project) {
-    this.localStorage.set(CONSTANTS.selectedProjectId, project.id);
+    if (project) {
+      this.localStorage.set(CONSTANTS.selectedProjectId, project.id);
+      return;
+    }
+
+    this.localStorage.remove(CONSTANTS.selectedProjectId);
   }
 
   getAll(search?: string): Project[] {
@@ -92,7 +97,7 @@ export class ProjectService {
     return project;
   }
 
-  update(id: string, payload: Project): Project | boolean {
+  update(id: string, payload: Omit<Project, 'id'>): Project | boolean {
     const project = this.getById(id);
 
     if (project) {

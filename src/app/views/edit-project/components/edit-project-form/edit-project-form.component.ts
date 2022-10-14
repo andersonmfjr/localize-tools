@@ -4,25 +4,25 @@ import {
   UntypedFormControl,
   Validators,
 } from '@angular/forms';
-import { NzUploadFile } from 'ng-zorro-antd/upload';
-import * as path from 'path';
-import { v4 as uuidv4 } from 'uuid';
-import { Project } from '../../../../shared/models/project.model';
+import { LOCALES } from '../../../../shared/helpers/locales';
 import { Locale } from '../../../../shared/models/locale.model';
+import { Project } from '../../../../shared/models/project.model';
+import * as path from 'path';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { ProjectService } from '../../../../shared/services/project/project.service';
-import { LOCALES } from '../../../../shared/helpers/locales';
 
 type LocaleControl = Array<{ id: number; controlInstance: string }>;
 
 @Component({
-  selector: 'app-create-project-form',
-  templateUrl: './create-project-form.component.html',
-  styleUrls: ['./create-project-form.component.scss'],
+  selector: 'app-edit-project-form',
+  templateUrl: './edit-project-form.component.html',
+  styleUrls: ['./edit-project-form.component.scss'],
 })
-export class CreateProjectFormComponent implements OnInit {
-  isCreatingProject = false;
+export class EditProjectFormComponent implements OnInit {
+  isEditingProject = false;
+  project: Project;
 
   locales = LOCALES;
 
@@ -59,12 +59,22 @@ export class CreateProjectFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addField();
+    this.project = this.projectService.selectedProject;
+
+    this.form.patchValue(this.project);
+
+    const messages = this.project.messages;
+    this.messagesPath =
+      messages.directory + this.separator + messages.prefix + '.json';
+    this.form.patchValue({ defaultLocale: this.project.defaultLocale.id });
+
+    this.project.locales.forEach((locale) => {
+      this.addField(null, locale.id, locale.suffix);
+    });
   }
 
   onSubmit() {
-    this.isCreatingProject = true;
-    const id = uuidv4();
+    this.isEditingProject = true;
     const formValue = this.form.value;
     const locales = [];
 
@@ -104,8 +114,7 @@ export class CreateProjectFormComponent implements OnInit {
       abbreviation: formValue.defaultLocale,
     };
 
-    const project: Project = {
-      id,
+    const project: Omit<Project, 'id'> = {
       name: formValue.name,
       description: formValue.description || '',
       defaultLocale,
@@ -114,12 +123,12 @@ export class CreateProjectFormComponent implements OnInit {
       useXlff: formValue.useXlff,
     };
 
-    this.projectService.add(project);
+    this.projectService.update(this.project.id, project);
 
     setTimeout(() => {
-      this.messageService.success('Project created successfully!');
-      this.isCreatingProject = false;
-      this.router.navigateByUrl('/home');
+      this.messageService.success('Project edited successfully!');
+      this.isEditingProject = false;
+      this.router.navigateByUrl('/project');
     }, 1000);
   }
 
@@ -139,16 +148,16 @@ export class CreateProjectFormComponent implements OnInit {
     return false;
   };
 
-  addField(e?: MouseEvent): void {
+  addField(e: MouseEvent, localeId: string, localeSuffix: string): void {
     if (e) {
       e.preventDefault();
     }
 
-    this.addProjectLocaleField();
-    this.addProjectLocaleSuffixField();
+    this.addProjectLocaleField(localeId);
+    this.addProjectLocaleSuffixField(localeSuffix);
   }
 
-  addProjectLocaleField() {
+  addProjectLocaleField(localeId: string) {
     const id =
       this.projectLocalesControls.length > 0
         ? this.projectLocalesControls[this.projectLocalesControls.length - 1]
@@ -161,13 +170,23 @@ export class CreateProjectFormComponent implements OnInit {
     };
     const index = this.projectLocalesControls.push(control);
 
+    let formValue = '';
+
+    if (id === 0) {
+      formValue = 'en-US';
+    }
+
+    if (localeId) {
+      formValue = localeId;
+    }
+
     this.form.addControl(
       this.projectLocalesControls[index - 1].controlInstance,
-      new UntypedFormControl(id === 0 ? 'en-US' : '', Validators.required)
+      new UntypedFormControl(formValue, Validators.required)
     );
   }
 
-  addProjectLocaleSuffixField() {
+  addProjectLocaleSuffixField(localeSuffix: string) {
     const id =
       this.projectLocalesSuffixControls.length > 0
         ? this.projectLocalesSuffixControls[
@@ -181,9 +200,19 @@ export class CreateProjectFormComponent implements OnInit {
     };
     const index = this.projectLocalesSuffixControls.push(control);
 
+    let formValue = '';
+
+    if (id === 0) {
+      formValue = 'en';
+    }
+
+    if (localeSuffix) {
+      formValue = localeSuffix;
+    }
+
     this.form.addControl(
       this.projectLocalesSuffixControls[index - 1].controlInstance,
-      new UntypedFormControl(id === 0 ? 'en' : '', Validators.required)
+      new UntypedFormControl(formValue, Validators.required)
     );
   }
 

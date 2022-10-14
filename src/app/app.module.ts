@@ -17,12 +17,12 @@ import { HomeModule } from './views/home/home.module';
 
 import { AppComponent } from './app.component';
 import { CreateProjectModule } from './views/create-project/create-project.module';
-import { ProjectComponent } from './views/project/project.component';
-import { EditProjectComponent } from './views/edit-project/edit-project.component';
 import { TranslateProjectComponent } from './views/translate-project/translate-project.component';
+import { ProjectModule } from './views/project/project.module';
+import { EditProjectModule } from './views/edit-project/edit-project.module';
 
 @NgModule({
-  declarations: [AppComponent, ProjectComponent, EditProjectComponent, TranslateProjectComponent],
+  declarations: [AppComponent, TranslateProjectComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -31,6 +31,8 @@ import { TranslateProjectComponent } from './views/translate-project/translate-p
     SharedModule,
     HomeModule,
     CreateProjectModule,
+    ProjectModule,
+    EditProjectModule,
     AppRoutingModule,
     BrowserAnimationsModule,
   ],

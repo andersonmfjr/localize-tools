@@ -13,10 +13,26 @@
             {{ project.name }}
           </a>
         </nz-breadcrumb-item>
-        <nz-breadcrumb-item>Editar</nz-breadcrumb-item>
+        <nz-breadcrumb-item>Edit</nz-breadcrumb-item>
       </nz-breadcrumb>
     </app-header>
 
     <h2 nz-typography>{{ project.name }}</h2>
+
+    <app-edit-project-form></app-edit-project-form>
+
+    <nz-divider></nz-divider>
+
+    <button
+      nz-button
+      nzType="primary"
+      nzDanger
+      nz-popconfirm
+      nzPopconfirmTitle="Are you sure delete this project?"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="deleteProject()"
+    >
+      <span nz-icon nzType="delete" nzTheme="outline"></span> Delete project
+    </button>
   </app-page-container>
 </ng-container>

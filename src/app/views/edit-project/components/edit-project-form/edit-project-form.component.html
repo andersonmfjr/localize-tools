@@ -1,0 +1,145 @@
+<form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <nz-form-item>
+    <nz-form-label>Name</nz-form-label>
+    <nz-form-control nzErrorTip="Please input your project name!">
+      <input nz-input formControlName="name" placeholder="My project" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Description (optional)</nz-form-label>
+    <nz-form-control>
+      <textarea
+        formControlName="description"
+        nz-input
+        placeholder="An awesome description"
+        [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+      ></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Default locale</nz-form-label>
+    <nz-form-control nzErrorTip="Please select project default locale!">
+      <nz-select formControlName="defaultLocale">
+        <nz-option
+          *ngFor="let locale of locales"
+          [nzValue]="locale.value"
+          [nzLabel]="locale.label"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>
+      <span>Default locale JSON</span>
+      <span
+        class="ml-05"
+        nz-icon
+        nzType="question-circle"
+        nz-tooltip
+        nzTooltipTitle="Other locales needs to be on same directory"
+      ></span>
+    </nz-form-label>
+    <nz-form-control nzErrorTip="Please select your default locale JSON">
+      <div class="flex align-center">
+        <nz-upload [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload">
+          <button nz-button type="button">
+            <span nz-icon nzType="upload"></span>
+            Click to Upload
+          </button>
+        </nz-upload>
+
+        <span class="ml-05" nz-typography *ngIf="messagesPath">
+          {{ messagesPath }}
+        </span>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngFor="let control of projectLocalesControls; let i = index">
+    <nz-form-label *ngIf="i === 0" [nzFor]="control.controlInstance">
+      Locales
+    </nz-form-label>
+    <div class="flex align-center justify-space-between gap-1">
+      <nz-form-control
+        nzErrorTip="Please input locale informations or delete this field."
+      >
+        <nz-select
+          [attr.id]="control.id"
+          [formControlName]="control.controlInstance"
+        >
+          <nz-option
+            *ngFor="let locale of locales"
+            [nzValue]="locale.value"
+            [nzLabel]="locale.label"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+
+      <nz-form-control>
+        <input
+          nz-input
+          placeholder="Suffix"
+          [attr.id]="control.id"
+          [formControlName]="projectLocalesSuffixControls[i].controlInstance"
+        />
+      </nz-form-control>
+
+      <span
+        nz-icon
+        nzType="minus-circle-o"
+        class="dynamic-delete-button"
+        (click)="removeField(control, $event)"
+      ></span>
+    </div>
+
+    <span
+      class="mt-05"
+      *ngIf="
+        renderProjectLocalePath(
+          control.controlInstance,
+          projectLocalesSuffixControls[i].controlInstance
+        )
+      "
+    >
+      {{ formatLocalePath(projectLocalesSuffixControls[i].controlInstance) }}
+    </span>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <button
+        type="button"
+        nz-button
+        nzType="dashed"
+        class="w-100"
+        (click)="addField($event, null, null)"
+      >
+        <span nz-icon nzType="plus"></span>
+        Add locale
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <label nz-checkbox formControlName="useXlff">
+        Use XLFF to view contexts
+      </label>
+    </nz-form-control>
+  </nz-form-item>
+
+  <button
+    nz-button
+    nzSize="large"
+    nzType="primary"
+    [disabled]="form.invalid || isEditingProject"
+    type="submit"
+    [nzLoading]="isEditingProject"
+  >
+    <span nz-icon nzType="edit" nzTheme="outline"></span>
+    Edit project
+  </button>
+</form>
