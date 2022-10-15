@@ -28,8 +28,9 @@ export function orderTranslations(project: Project) {
 
     const indent = detectIndent(localeRawData).indent || '  ';
     const parsedData = JSON.stringify(localeJson, null, indent);
+    const endOfFileMatches = localeRawData.match(/\r?\n$/)?.[0];
+    const endOfFile = endOfFileMatches ? endOfFileMatches : '';
 
-    // TODO: Get \n (end of file) by project config
-    fs.writeFileSync(locale.path, parsedData + '\n');
+    fs.writeFileSync(locale.path, parsedData + endOfFile);
   });
 }
