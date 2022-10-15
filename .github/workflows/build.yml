@@ -77,7 +77,7 @@ jobs:
         with:
           name: '{{ needs.semantic_release.outputs.new_release_version }}'
           allowUpdates: true
-          tag: '{{ needs.semantic_release.outputs.new_release_version }}'
+          tag: '{{ format('v{0}', needs.semantic_release.outputs.new_release_version) }}'
           artifacts: './release/*.dmg'
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -129,7 +129,7 @@ jobs:
         with:
           name: '{{ needs.semantic_release.outputs.new_release_version }}'
           allowUpdates: true
-          tag: '{{ needs.semantic_release.outputs.new_release_version }}'
+          tag: '{{ format('v{0}', needs.semantic_release.outputs.new_release_version) }}'
           artifacts: './release/*.AppImage'
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -176,6 +176,6 @@ jobs:
         with:
           name: '{{ needs.semantic_release.outputs.new_release_version }}'
           allowUpdates: true
-          tag: '{{ needs.semantic_release.outputs.new_release_version }}'
+          tag: '{{ format('v{0}', needs.semantic_release.outputs.new_release_version) }}'
           artifacts: './release/*.exe'
           token: ${{ secrets.GITHUB_TOKEN }}
