@@ -69,9 +69,6 @@ jobs:
       - name: Install Dependencies
         run: npm i --legacy-peer-deps && npm i --legacy-peer-deps -D cli-truncate iconv-corefoundation
 
-      - name: Check lint
-        run: npm run lint
-
       - name: Build the app
         run: npm run electron:build
 
@@ -124,9 +121,6 @@ jobs:
       - name: Install Dependencies
         run: npm i --legacy-peer-deps
 
-      - name: Check lint
-        run: npm run lint
-
       - name: Build the app
         run: npm run electron:build
 
@@ -173,9 +167,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm i --legacy-peer-deps
-
-      - name: Check lint
-        run: npm run lint
 
       - name: Build the app
         run: npm run electron:build
