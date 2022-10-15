@@ -29,11 +29,11 @@ export function verifyProjectFiles(
         const file = fs.readFileSync(locale.path, 'utf8');
         const keys = Object.keys(JSON.parse(file));
 
-        const isValid = ['locale', 'translations'].every((key) =>
+        const hasAllKeys = ['locale', 'translations'].every((key) =>
           keys.includes(key)
         );
 
-        if (!isValid) {
+        if (!hasAllKeys) {
           errors.push(`${locale.name}: ${locale.path} is invalid`);
         }
       }
