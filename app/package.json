@@ -1,13 +1,12 @@
 {
-  "name": "angular-electron",
-  "description": "Angular Electron sample",
-  "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
-  },
+  "name": "localize-tools",
   "version": "11.1.0",
+  "description": "Tools to provide better DX when working with @angular/localize",
+  "author": {
+    "name": "Anderson Feitosa",
+    "email": "andersonmfjr@gmail.com"
+  },
   "main": "main.js",
   "private": true,
-  "dependencies": {
-  }
+  "dependencies": {}
 }

@@ -1,0 +1,194 @@
+name: 'Build'
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'stg'
+        type: choice
+        options:
+          - stg
+          - dev
+          - prd
+      branchName:
+        description: 'Confirm branch name you want to deploy'
+        required: true
+
+jobs:
+  semantic_release:
+    runs-on: ubuntu-latest
+    outputs:
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+      new_release_version: ${{ steps.semantic.outputs.new_release_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v2
+        id: semantic
+        with:
+          semantic_version: 16
+          extra_plugins: |
+            conventional-changelog-eslint
+          branches: |
+            [
+              'main'
+            ]
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build_mac:
+    needs: [semantic_release]
+    strategy:
+      matrix:
+        node-version: [16]
+
+    runs-on: macos-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: npm i --legacy-peer-deps && npm i --legacy-peer-deps -D cli-truncate iconv-corefoundation
+
+      - name: Check lint
+        run: npm run lint
+
+      - name: Build the app
+        run: npm run electron:build
+
+      - name: Upload app to release
+        uses: ncipollo/release-action@v1
+        with:
+          name: '{{ needs.semantic_release.outputs.new_release_version }}'
+          allowUpdates: true
+          tag: '{{ needs.semantic_release.outputs.new_release_version }}'
+          artifacts: './release/*.AppImage'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  build_linux:
+    needs: [semantic_release]
+    strategy:
+      matrix:
+        node-version: [16]
+
+    runs-on: ubuntu-18.04
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: npm i --legacy-peer-deps && npm i --legacy-peer-deps -D cli-truncate iconv-corefoundation
+
+      - name: Check lint
+        run: npm run lint
+
+      - name: Build the app
+        run: npm run electron:build
+
+      - name: Upload app to release
+        uses: ncipollo/release-action@v1
+        with:
+          name: '{{ needs.semantic_release.outputs.new_release_version }}'
+          allowUpdates: true
+          tag: '{{ needs.semantic_release.outputs.new_release_version }}'
+          artifacts: './release/*.dmg'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  build_windows:
+    needs: [semantic_release]
+    strategy:
+      matrix:
+        node-version: [16]
+
+    runs-on: windows-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: npm i --legacy-peer-deps && npm i --legacy-peer-deps -D cli-truncate iconv-corefoundation
+
+      - name: Check lint
+        run: npm run lint
+
+      - name: Build the app
+        run: npm run electron:build
+
+      - name: Upload app to release
+        uses: ncipollo/release-action@v1
+        with:
+          name: '{{ needs.semantic_release.outputs.new_release_version }}'
+          allowUpdates: true
+          tag: '{{ needs.semantic_release.outputs.new_release_version }}'
+          artifacts: './release/*.exe'
+          token: ${{ secrets.GITHUB_TOKEN }}
