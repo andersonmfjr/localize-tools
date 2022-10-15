@@ -78,7 +78,7 @@ jobs:
           name: '{{ needs.semantic_release.outputs.new_release_version }}'
           allowUpdates: true
           tag: '{{ needs.semantic_release.outputs.new_release_version }}'
-          artifacts: './release/*.AppImage'
+          artifacts: './release/*.dmg'
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_linux:
@@ -130,7 +130,7 @@ jobs:
           name: '{{ needs.semantic_release.outputs.new_release_version }}'
           allowUpdates: true
           tag: '{{ needs.semantic_release.outputs.new_release_version }}'
-          artifacts: './release/*.dmg'
+          artifacts: './release/*.AppImage'
           token: ${{ secrets.GITHUB_TOKEN }}
 
   build_windows:
