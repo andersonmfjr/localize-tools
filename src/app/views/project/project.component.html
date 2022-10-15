@@ -1,15 +1,24 @@
 <ng-container *ngIf="project">
   <app-page-container>
     <app-header>
-      <nz-breadcrumb>
-        <nz-breadcrumb-item>
-          <a routerLink="/home">
-            <span nz-icon nzType="home" nzTheme="outline"></span>
-            <span>Projects</span>
-          </a>
-        </nz-breadcrumb-item>
-        <nz-breadcrumb-item>{{ project.name }}</nz-breadcrumb-item>
-      </nz-breadcrumb>
+      <div class="flex align-start justify-space-between w-100">
+        <nz-breadcrumb>
+          <nz-breadcrumb-item>
+            <a routerLink="/home">
+              <span nz-icon nzType="home" nzTheme="outline"></span>
+              <span>Projects</span>
+            </a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item>{{ project.name }}</nz-breadcrumb-item>
+        </nz-breadcrumb>
+
+        <a routerLink="/edit-project">
+          <button nz-button nzSize="small" nzType="primary">
+            <span nz-icon nzType="edit" nzTheme="outline"></span>
+            Edit project
+          </button>
+        </a>
+      </div>
     </app-header>
 
     <h2 nz-typography>{{ project.name }}</h2>
