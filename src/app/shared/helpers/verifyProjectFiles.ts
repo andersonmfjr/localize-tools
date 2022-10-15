@@ -8,27 +8,31 @@ type VerifyProjectFilesResponse = {
 export function verifyProjectFiles(
   project: Project
 ): VerifyProjectFilesResponse {
-  const fs = window.require('fs');
-  const errors = [];
+  try {
+    const fs = window.require('fs');
+    const errors = [];
 
-  const locales = [
-    {
-      name: project.defaultLocale.name,
-      path: project.defaultLocale.path,
-    },
-    ...project.locales,
-  ];
+    const locales = [
+      {
+        name: project.defaultLocale.name,
+        path: project.defaultLocale.path,
+      },
+      ...project.locales,
+    ];
 
-  locales.forEach((locale) => {
-    const exists = fs?.existsSync(locale.path);
+    locales.forEach((locale) => {
+      const exists = fs?.existsSync(locale.path);
 
-    if (!exists) {
-      errors.push(`${locale.name}: ${locale.path} not exists`);
-    }
-  });
+      if (!exists) {
+        errors.push(`${locale.name}: ${locale.path} not exists`);
+      }
+    });
 
-  return {
-    hasErrors: !!errors.length,
-    errorsMessages: errors,
-  };
+    return {
+      hasErrors: !!errors.length,
+      errorsMessages: errors,
+    };
+  } catch (error) {
+    throw error;
+  }
 }
