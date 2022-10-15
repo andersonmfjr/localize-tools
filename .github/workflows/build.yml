@@ -6,15 +6,6 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'Deployment environment'
-        required: true
-        default: 'stg'
-        type: choice
-        options:
-          - stg
-          - dev
-          - prd
       branchName:
         description: 'Confirm branch name you want to deploy'
         required: true
