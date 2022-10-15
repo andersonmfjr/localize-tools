@@ -21,9 +21,9 @@
   <ng-container formGroupName="defaultLocale">
     <nz-form-item>
       <nz-form-label>Default locale</nz-form-label>
-      <div class="flex align-center justify-space-between gap-1">
+      <div class="flex align-start justify-space-between gap-1">
         <nz-form-control nzErrorTip="Please select project default locale!">
-          <nz-select formControlName="id">
+          <nz-select nzShowSearch nzAllowClear formControlName="id">
             <nz-option
               *ngFor="let locale of locales"
               [nzValue]="locale.value"
@@ -53,7 +53,7 @@
     <nz-form-label *ngIf="i === 0" [nzFor]="control.controlInstance">
       Locales
     </nz-form-label>
-    <div class="flex align-center justify-space-between gap-1">
+    <div class="flex align-start justify-space-between gap-1">
       <nz-form-control
         nzErrorTip="Please input locale informations or delete this field."
       >
