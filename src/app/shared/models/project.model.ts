@@ -5,10 +5,6 @@ export class Project {
   name: string;
   description?: string;
   defaultLocale: Locale;
-  messages: {
-    directory: string;
-    prefix: string;
-  };
   locales: Locale[];
   useXlff: boolean;
 }

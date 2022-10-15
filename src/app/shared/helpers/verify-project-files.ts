@@ -1,5 +1,4 @@
 import { Project } from '../models/project.model';
-import * as path from 'path';
 
 type VerifyProjectFilesResponse = {
   hasErrors: boolean;
@@ -15,16 +14,10 @@ export function verifyProjectFiles(
   const locales = [
     {
       name: project.defaultLocale.name,
-      path: `${project.messages.directory}${path.sep}${project.messages.prefix}.json`,
+      path: project.defaultLocale.path,
     },
+    ...project.locales,
   ];
-
-  project.locales?.forEach((locale) => {
-    locales.push({
-      name: locale.name,
-      path: `${project.messages.directory}${path.sep}${project.messages.prefix}.${locale.suffix}.json`,
-    });
-  });
 
   locales.forEach((locale) => {
     const exists = fs?.existsSync(locale.path);
