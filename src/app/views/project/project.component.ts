@@ -50,12 +50,24 @@ export class ProjectComponent implements OnInit {
   }
 
   removeUnusedTranslations() {
-    removeUnusedTranslations(this.project);
-    this.messageService.success('Unused translations removed succesfully!');
+    try {
+      removeUnusedTranslations(this.project);
+      this.messageService.success('Unused translations removed succesfully!');
+    } catch {
+      this.messageService.error(
+        'An error has occurred when removing. Please verify your translate files!'
+      );
+    }
   }
 
   orderTranslations() {
-    orderTranslations(this.project);
-    this.messageService.success('Translations ordered succesfully!');
+    try {
+      orderTranslations(this.project);
+      this.messageService.success('Translations ordered succesfully!');
+    } catch {
+      this.messageService.error(
+        'An error has occurred when ordering. Please verify your translate files!'
+      );
+    }
   }
 }
