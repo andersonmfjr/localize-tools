@@ -1,11 +1,11 @@
 {
-  "name": "angular-electron",
+  "name": "localize-tools",
   "version": "11.1.0",
-  "description": "Angular 14 with Electron 19 (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "description": "Tools to provide better DX when working with @angular/localize",
+  "homepage": "https://andersonmfjr.com",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Anderson Feitosa",
+    "email": "andersonmfjr@gmail.com"
   },
   "keywords": [
     "angular",
@@ -42,7 +42,8 @@
     "e2e": "npm run build:prod && playwright test -c e2e/playwright.config.ts e2e/",
     "e2e:show-trace": "playwright show-trace e2e/tracing/trace.zip",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@angular/animations": "14.0.0",
@@ -76,6 +77,8 @@
     "@angular-eslint/template-parser": "14.0.2",
     "@angular/cli": "14.0.0",
     "@angular/compiler-cli": "14.0.0",
+    "@commitlint/cli": "17.1.2",
+    "@commitlint/config-conventional": "17.1.0",
     "@playwright/test": "1.23.4",
     "@types/jasmine": "4.0.3",
     "@types/jasminewd2": "2.0.10",
@@ -89,9 +92,12 @@
     "electron-debug": "3.2.0",
     "electron-reloader": "1.2.3",
     "eslint": "8.20.0",
+    "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsdoc": "39.3.3",
     "eslint-plugin-prefer-arrow": "1.2.3",
+    "eslint-plugin-prettier": "4.2.1",
+    "husky": "^8.0.0",
     "jasmine-core": "4.2.0",
     "jasmine-spec-reporter": "7.0.0",
     "karma": "6.4.0",
@@ -99,9 +105,12 @@
     "karma-electron": "7.2.0",
     "karma-jasmine": "5.1.0",
     "karma-jasmine-html-reporter": "2.0.0",
+    "lint-staged": "13.0.3",
     "node-polyfill-webpack-plugin": "2.0.0",
     "npm-run-all": "4.1.5",
     "playwright": "1.23.4",
+    "prettier": "2.7.1",
+    "prettier-eslint": "15.0.1",
     "ts-node": "10.9.1",
     "typescript": "~4.7.4",
     "wait-on": "6.0.1",
