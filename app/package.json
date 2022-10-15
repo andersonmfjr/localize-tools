@@ -1,6 +1,6 @@
 {
   "name": "localize-tools",
-  "version": "11.1.0",
+  "version": "1.0.0",
   "description": "Tools to provide better DX when working with @angular/localize",
   "author": {
     "name": "Anderson Feitosa",
