@@ -38,7 +38,7 @@ export class ProjectService {
       const defaultLocaleName = p.defaultLocale.name
         .toLocaleLowerCase()
         .includes(searchLowerCase);
-      const defaultLocaleAbbr = p.defaultLocale.abbreviation
+      const defaultLocalePath = p.defaultLocale.path
         .toLocaleLowerCase()
         .includes(searchLowerCase);
       const defaultLocaleId = p.defaultLocale.id
@@ -53,14 +53,10 @@ export class ProjectService {
         }
 
         const localeName = l.name.toLocaleLowerCase().includes(searchLowerCase);
-        const localeAbbr = l.abbreviation
-          .toLocaleLowerCase()
-          .includes(searchLowerCase);
-        const localeId = l.abbreviation
-          .toLocaleLowerCase()
-          .includes(searchLowerCase);
+        const localePath = l.path.toLocaleLowerCase().includes(searchLowerCase);
+        const localeId = l.id.toLocaleLowerCase().includes(searchLowerCase);
 
-        locales = localeAbbr || localeName || localeId;
+        locales = localePath || localeName || localeId;
       });
 
       return (
@@ -68,7 +64,7 @@ export class ProjectService {
         description ||
         defaultLocaleName ||
         defaultLocaleId ||
-        defaultLocaleAbbr ||
+        defaultLocalePath ||
         locales
       );
     });

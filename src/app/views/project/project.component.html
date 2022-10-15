@@ -29,13 +29,8 @@
 
     <section class="mt-1 content-block">
       <article>
-        <span class="bold">Messages directory:</span>
-        {{ project.messages.directory }}
-      </article>
-
-      <article>
         <span class="bold">Default locale:</span>
-        {{ project.defaultLocale.name }}
+        {{ project.defaultLocale.name }} - {{ project.defaultLocale.path }}
       </article>
 
       <article><span class="bold">Locales:</span> {{ projectLocales }}</article>

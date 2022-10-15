@@ -26,19 +26,17 @@ export class CreateProjectFormComponent implements OnInit {
 
   locales = LOCALES;
 
-  messagesPath = '';
-  separator = path.sep;
-
   projectLocalesControls: LocaleControl = [];
-  projectLocalesSuffixControls: LocaleControl = [];
+  projectLocalesPathsControls: LocaleControl = [];
+
+  activeUpload = 'defaultLocale';
 
   form = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    defaultLocale: ['en-US', Validators.required],
-    messages: this.fb.group({
-      directory: ['', Validators.required],
-      prefix: ['', Validators.required],
+    defaultLocale: this.fb.group({
+      id: ['en-US', Validators.required],
+      path: ['', Validators.required],
     }),
     useXlff: [false, Validators.required],
   });
@@ -50,16 +48,20 @@ export class CreateProjectFormComponent implements OnInit {
     private projectService: ProjectService
   ) {}
 
-  get messagesDirectoryControl() {
-    return this.form.get('messages.directory');
-  }
-
-  get messagesPrefixControl() {
-    return this.form.get('messages.prefix');
+  get defaultLocalePath() {
+    return this.form.get('defaultLocale.path');
   }
 
   ngOnInit(): void {
     this.addField();
+  }
+
+  setActiveUpload(item: string) {
+    this.activeUpload = item;
+  }
+
+  getControlValue(controlName: string) {
+    return this.form.get(controlName)?.value;
   }
 
   onSubmit() {
@@ -69,8 +71,8 @@ export class CreateProjectFormComponent implements OnInit {
     const locales = [];
 
     Object.keys(formValue).forEach((key) => {
-      if (key.includes('localeSuffix')) {
-        const suffix = this.form.get(key).value;
+      if (key.includes('localePath')) {
+        const localePath = this.form.get(key).value;
         const localeIndex = key.split('-').pop();
         const localeId = this.form.get(`locale-${localeIndex}`)?.value;
         const localeName = this.locales.find(
@@ -81,8 +83,7 @@ export class CreateProjectFormComponent implements OnInit {
           const formattedLocale = {
             name: localeName,
             id: localeId,
-            abbreviation: localeId,
-            suffix,
+            path: localePath,
           };
 
           locales.push(formattedLocale);
@@ -96,12 +97,12 @@ export class CreateProjectFormComponent implements OnInit {
     }
 
     const locale = this.locales.find(
-      (l) => l.value === formValue.defaultLocale
+      (l) => l.value === formValue.defaultLocale.id
     );
     const defaultLocale: Locale = {
       name: locale.label,
-      id: formValue.defaultLocale,
-      abbreviation: formValue.defaultLocale,
+      id: formValue.defaultLocale.id,
+      path: formValue.defaultLocale.path,
     };
 
     const project: Project = {
@@ -109,7 +110,6 @@ export class CreateProjectFormComponent implements OnInit {
       name: formValue.name,
       description: formValue.description || '',
       defaultLocale,
-      messages: formValue.messages,
       locales,
       useXlff: formValue.useXlff,
     };
@@ -124,18 +124,18 @@ export class CreateProjectFormComponent implements OnInit {
   }
 
   beforeUpload = (file: NzUploadFile, _fileList: NzUploadFile[]): boolean => {
-    const messagesPrefix = path.parse(file.path).name;
-    const messagesDirectory = path.dirname(file.path);
+    if (this.activeUpload === 'defaultLocale') {
+      this.form.patchValue({
+        [this.activeUpload]: {
+          path: file.path,
+        },
+      });
+      return false;
+    }
 
     this.form.patchValue({
-      messages: {
-        directory: messagesDirectory,
-        prefix: messagesPrefix,
-      },
+      [this.activeUpload]: file.path,
     });
-
-    this.messagesPath = file.path;
-
     return false;
   };
 
@@ -145,7 +145,7 @@ export class CreateProjectFormComponent implements OnInit {
     }
 
     this.addProjectLocaleField();
-    this.addProjectLocaleSuffixField();
+    this.addProjectLocalePathField();
   }
 
   addProjectLocaleField() {
@@ -167,30 +167,30 @@ export class CreateProjectFormComponent implements OnInit {
     );
   }
 
-  addProjectLocaleSuffixField() {
+  addProjectLocalePathField() {
     const id =
-      this.projectLocalesSuffixControls.length > 0
-        ? this.projectLocalesSuffixControls[
-            this.projectLocalesSuffixControls.length - 1
+      this.projectLocalesPathsControls.length > 0
+        ? this.projectLocalesPathsControls[
+            this.projectLocalesPathsControls.length - 1
           ].id + 1
         : 0;
 
     const control = {
       id,
-      controlInstance: `localeSuffix-${id}`,
+      controlInstance: `localePath-${id}`,
     };
-    const index = this.projectLocalesSuffixControls.push(control);
+    const index = this.projectLocalesPathsControls.push(control);
 
     this.form.addControl(
-      this.projectLocalesSuffixControls[index - 1].controlInstance,
-      new UntypedFormControl(id === 0 ? 'en' : '', Validators.required)
+      this.projectLocalesPathsControls[index - 1].controlInstance,
+      new UntypedFormControl('', Validators.required)
     );
   }
 
   removeField(i: { id: number; controlInstance: string }, e: MouseEvent): void {
     e.preventDefault();
     this.removeProjectLocaleField(i);
-    this.removeProjectLocaleSuffixField(i);
+    this.removeProjectLocalePathField(i);
   }
 
   removeProjectLocaleField(i: { id: number; controlInstance: string }) {
@@ -201,34 +201,18 @@ export class CreateProjectFormComponent implements OnInit {
     }
   }
 
-  removeProjectLocaleSuffixField(i: { id: number; controlInstance: string }) {
-    if (this.projectLocalesSuffixControls.length > 1) {
-      const index = this.projectLocalesSuffixControls.indexOf(i);
-      this.projectLocalesSuffixControls.splice(index, 1);
+  removeProjectLocalePathField(i: { id: number; controlInstance: string }) {
+    if (this.projectLocalesPathsControls.length > 1) {
+      const index = this.projectLocalesPathsControls.indexOf(i);
+      this.projectLocalesPathsControls.splice(index, 1);
       this.form.removeControl(i.controlInstance);
     }
   }
 
-  renderProjectLocalePath(
-    localeControl: string,
-    suffixControl: string
-  ): boolean {
+  renderProjectLocalePath(localeControl: string, pathControl: string): boolean {
     const localeControlValue = this.form.get(localeControl)?.value;
-    const suffixControlValue = this.form.get(suffixControl)?.value;
+    const pathControlValue = this.form.get(pathControl)?.value;
 
-    return (
-      localeControlValue &&
-      suffixControlValue &&
-      this.messagesDirectoryControl.value &&
-      this.messagesPrefixControl.value
-    );
-  }
-
-  formatLocalePath(suffixControl: string) {
-    const suffixControlValue = this.form.get(suffixControl)?.value;
-    const messagesDirectory = this.messagesDirectoryControl.value;
-    const messagesPrefix = this.messagesPrefixControl.value;
-    const localeFile = `${messagesPrefix}.${suffixControlValue}.json`;
-    return `Your file should be ${messagesDirectory}${this.separator}${localeFile}`;
+    return localeControlValue && pathControlValue;
   }
 }

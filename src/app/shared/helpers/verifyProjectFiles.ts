@@ -23,7 +23,7 @@ export function verifyProjectFiles(
     const exists = fs?.existsSync(locale.path);
 
     if (!exists) {
-      errors.push(`Locale ${locale.name} file not exists`);
+      errors.push(`${locale.name}: ${locale.path} not exists`);
     }
   });
 

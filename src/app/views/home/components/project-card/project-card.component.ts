@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { verifyProjectFiles } from '../../../../shared/helpers/verify-project-files';
+import { verifyProjectFiles } from '../../../../shared/helpers/verifyProjectFiles';
 import { Project } from '../../../../shared/models/project.model';
 import { ProjectService } from '../../../../shared/services/project/project.service';
 
@@ -19,9 +19,7 @@ export class ProjectCardComponent implements OnInit {
 
   get projectLocales(): string {
     if (this.project.locales.length === 1) {
-      return (
-        this.project.locales[0].name + ' - ' + this.project.locales[0].suffix
-      );
+      return this.project.locales[0].name;
     }
 
     let locales = '';
@@ -30,8 +28,6 @@ export class ProjectCardComponent implements OnInit {
       locales =
         locales +
         locale.name +
-        ' - ' +
-        locale.suffix +
         `${index === this.project.locales.length - 1 ? '' : ', '}`;
     });
 
@@ -47,7 +43,7 @@ export class ProjectCardComponent implements OnInit {
   }
 
   onActionClick(e: Event, type: string) {
-    if (e) {
+    if (e && type !== 'delete') {
       e.stopPropagation();
       e.stopImmediatePropagation();
     }

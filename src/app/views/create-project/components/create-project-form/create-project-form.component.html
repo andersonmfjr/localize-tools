@@ -18,45 +18,37 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label>Default locale</nz-form-label>
-    <nz-form-control nzErrorTip="Please select project default locale!">
-      <nz-select formControlName="defaultLocale">
-        <nz-option
-          *ngFor="let locale of locales"
-          [nzValue]="locale.value"
-          [nzLabel]="locale.label"
-        ></nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+  <ng-container formGroupName="defaultLocale">
+    <nz-form-item>
+      <nz-form-label>Default locale</nz-form-label>
+      <div class="flex align-center justify-space-between gap-1">
+        <nz-form-control nzErrorTip="Please select project default locale!">
+          <nz-select formControlName="id">
+            <nz-option
+              *ngFor="let locale of locales"
+              [nzValue]="locale.value"
+              [nzLabel]="locale.label"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
 
-  <nz-form-item>
-    <nz-form-label>
-      <span>Default locale JSON</span>
-      <span
-        class="ml-05"
-        nz-icon
-        nzType="question-circle"
-        nz-tooltip
-        nzTooltipTitle="Other locales needs to be on same directory"
-      ></span>
-    </nz-form-label>
-    <nz-form-control nzErrorTip="Please select your default locale JSON">
-      <div class="flex align-center">
         <nz-upload [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload">
-          <button nz-button type="button">
+          <button
+            nz-button
+            type="button"
+            (click)="setActiveUpload('defaultLocale')"
+          >
             <span nz-icon nzType="upload"></span>
             Click to Upload
           </button>
         </nz-upload>
-
-        <span class="ml-05" nz-typography *ngIf="messagesPath">
-          {{ messagesPath }}
-        </span>
       </div>
-    </nz-form-control>
-  </nz-form-item>
+
+      <span class="mt-05" nz-typography *ngIf="defaultLocalePath.value">
+        Path: {{ defaultLocalePath.value }}
+      </span>
+    </nz-form-item>
+  </ng-container>
 
   <nz-form-item *ngFor="let control of projectLocalesControls; let i = index">
     <nz-form-label *ngIf="i === 0" [nzFor]="control.controlInstance">
@@ -79,12 +71,18 @@
       </nz-form-control>
 
       <nz-form-control>
-        <input
-          nz-input
-          placeholder="Suffix"
-          [attr.id]="control.id"
-          [formControlName]="projectLocalesSuffixControls[i].controlInstance"
-        />
+        <nz-upload [nzShowUploadList]="false" [nzBeforeUpload]="beforeUpload">
+          <button
+            nz-button
+            type="button"
+            (click)="
+              setActiveUpload(projectLocalesPathsControls[i].controlInstance)
+            "
+          >
+            <span nz-icon nzType="upload"></span>
+            Click to Upload
+          </button>
+        </nz-upload>
       </nz-form-control>
 
       <span
@@ -100,11 +98,12 @@
       *ngIf="
         renderProjectLocalePath(
           control.controlInstance,
-          projectLocalesSuffixControls[i].controlInstance
+          projectLocalesPathsControls[i].controlInstance
         )
       "
     >
-      {{ formatLocalePath(projectLocalesSuffixControls[i].controlInstance) }}
+      Path:
+      {{ getControlValue(projectLocalesPathsControls[i].controlInstance) }}
     </span>
   </nz-form-item>
 

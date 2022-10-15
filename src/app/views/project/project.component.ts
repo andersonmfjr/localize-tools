@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { orderTranslations } from '../../shared/helpers/orderTranslations';
 import { removeUnusedTranslations } from '../../shared/helpers/removeUnusedTranslations';
-import { verifyProjectFiles } from '../../shared/helpers/verify-project-files';
+import { verifyProjectFiles } from '../../shared/helpers/verifyProjectFiles';
 import { Project } from '../../shared/models/project.model';
 import { ProjectService } from '../../shared/services/project/project.service';
 
@@ -24,9 +24,7 @@ export class ProjectComponent implements OnInit {
 
   get projectLocales(): string {
     if (this.project.locales.length === 1) {
-      return (
-        this.project.locales[0].name + ' - ' + this.project.locales[0].suffix
-      );
+      return this.project.locales[0].name;
     }
 
     let locales = '';
@@ -35,8 +33,6 @@ export class ProjectComponent implements OnInit {
       locales =
         locales +
         locale.name +
-        ' - ' +
-        locale.suffix +
         `${index === this.project.locales.length - 1 ? '' : ', '}`;
     });
 
