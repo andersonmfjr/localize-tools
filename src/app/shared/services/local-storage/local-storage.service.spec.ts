@@ -20,7 +20,7 @@ describe('LocalStorageService', () => {
     );
     spyOn(window.localStorage, 'setItem').and.callFake(
       (key: string, value: string): string => {
-        return (store[key] = <string>value);
+        return (store[key] = value as string);
       }
     );
     spyOn(window.localStorage, 'clear').and.callFake(() => {
@@ -80,7 +80,7 @@ describe('LocalStorageService', () => {
   it('should emit new value to changes event when set an item', () => {
     let nextValue: any;
 
-    service.changes.subscribe((value) => {
+    service.changes.subscribe(value => {
       nextValue = value;
     });
     const setted = service.set('foo', 'bar');
@@ -92,7 +92,7 @@ describe('LocalStorageService', () => {
   it('should emit new value to changes event when remove an item', () => {
     let nextValue: any;
 
-    service.changes.subscribe((value) => {
+    service.changes.subscribe(value => {
       nextValue = value;
     });
 

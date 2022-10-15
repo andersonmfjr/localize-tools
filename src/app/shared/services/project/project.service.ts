@@ -29,7 +29,7 @@ export class ProjectService {
       return projects;
     }
 
-    return projects.filter((p) => {
+    return projects.filter(p => {
       const searchLowerCase = search.toLocaleLowerCase();
       const name = p.name.toLocaleLowerCase().includes(searchLowerCase);
       const description = p.description
@@ -46,7 +46,7 @@ export class ProjectService {
         .includes(searchLowerCase);
 
       let locales = false;
-      p.locales?.forEach((l) => {
+      p.locales?.forEach(l => {
         if (locales) {
           locales = true;
           return;
@@ -72,7 +72,7 @@ export class ProjectService {
 
   getById(id: string): Project {
     const projects = this.getAll();
-    const project = projects.find((p) => p.id === id);
+    const project = projects.find(p => p.id === id);
     return project;
   }
 
@@ -82,7 +82,7 @@ export class ProjectService {
 
   deleteById(id: string): boolean {
     const projects = this.getAll();
-    const newProjects = projects.filter((p) => p.id !== id);
+    const newProjects = projects.filter(p => p.id !== id);
     return this.localStorage.set(CONSTANTS.projects, newProjects);
   }
 
@@ -99,7 +99,7 @@ export class ProjectService {
     if (project) {
       const newProject = { id, ...project, ...payload };
       const projects = this.getAll();
-      const newProjects = projects.map((p) => {
+      const newProjects = projects.map(p => {
         if (p.id === id) {
           return newProject;
         }

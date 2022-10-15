@@ -1,18 +1,15 @@
 <nz-card
   class="pointer"
-  [nzActions]="[actionSetting, actionEdit, actionEllipsis]"
->
+  [nzActions]="[actionSetting, actionEdit, actionEllipsis]">
   <nz-card-meta
     class="pointer"
     (click)="onActionClick(null, 'card')"
     [nzTitle]="project.name"
-    [nzDescription]="project.description || ''"
-  ></nz-card-meta>
+    [nzDescription]="project.description || ''"></nz-card-meta>
 
   <section
     class="mt-1 content-block pointer"
-    (click)="onActionClick(null, 'card')"
-  >
+    (click)="onActionClick(null, 'card')">
     <article>
       <span class="bold">Default locale:</span>
       {{ project.defaultLocale.name }} - {{ project.defaultLocale.path }}
@@ -25,8 +22,7 @@
 
       <div
         *ngFor="let message of projectFiles.errorsMessages"
-        class="status-danger"
-      >
+        class="status-danger">
         <span nz-icon nzType="alert" nzTheme="outline"></span>
         <span class="ml-05">{{ message }}</span>
       </div>
@@ -39,8 +35,7 @@
     nz-icon
     nzType="translation"
     nzTheme="outline"
-    (click)="onActionClick($event, 'home')"
-  ></span>
+    (click)="onActionClick($event, 'home')"></span>
 </ng-template>
 <ng-template #actionEdit>
   <span (click)="onActionClick($event, 'edit')" nz-icon nzType="edit"></span>
@@ -54,6 +49,5 @@
     (nzOnConfirm)="deleteProject()"
     nz-icon
     nzType="delete"
-    nzTheme="outline"
-  ></span>
+    nzTheme="outline"></span>
 </ng-template>

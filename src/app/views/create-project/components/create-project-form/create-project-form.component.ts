@@ -70,14 +70,12 @@ export class CreateProjectFormComponent implements OnInit {
     const formValue = this.form.value;
     const locales = [];
 
-    Object.keys(formValue).forEach((key) => {
+    Object.keys(formValue).forEach(key => {
       if (key.includes('localePath')) {
         const localePath = this.form.get(key).value;
         const localeIndex = key.split('-').pop();
         const localeId = this.form.get(`locale-${localeIndex}`)?.value;
-        const localeName = this.locales.find(
-          (l) => l.value === localeId
-        )?.label;
+        const localeName = this.locales.find(l => l.value === localeId)?.label;
 
         if (localeId) {
           const formattedLocale = {
@@ -97,7 +95,7 @@ export class CreateProjectFormComponent implements OnInit {
     }
 
     const locale = this.locales.find(
-      (l) => l.value === formValue.defaultLocale.id
+      l => l.value === formValue.defaultLocale.id
     );
     const defaultLocale: Locale = {
       name: locale.label,

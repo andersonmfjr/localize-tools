@@ -12,7 +12,7 @@ export function orderTranslations(project: Project) {
     const defaultTranslations = defaultLocaleJson.translations;
     const defaultTranslationsKeys = Object.keys(defaultTranslations);
 
-    project.locales.forEach((locale) => {
+    project.locales.forEach(locale => {
       try {
         const localeRawData = fs.readFileSync(locale.path, 'utf8');
         const localeJson = JSON.parse(localeRawData);
@@ -20,7 +20,7 @@ export function orderTranslations(project: Project) {
 
         const newTranslations = {};
 
-        defaultTranslationsKeys.forEach((key) => {
+        defaultTranslationsKeys.forEach(key => {
           if (localeTranslations[key]) {
             newTranslations[key] = localeTranslations[key];
           }

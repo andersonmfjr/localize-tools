@@ -13,8 +13,7 @@
         formControlName="description"
         nz-input
         placeholder="An awesome description"
-        [nzAutosize]="{ minRows: 3, maxRows: 5 }"
-      ></textarea>
+        [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
     </nz-form-control>
   </nz-form-item>
 
@@ -27,8 +26,7 @@
             <nz-option
               *ngFor="let locale of locales"
               [nzValue]="locale.value"
-              [nzLabel]="locale.label"
-            ></nz-option>
+              [nzLabel]="locale.label"></nz-option>
           </nz-select>
         </nz-form-control>
 
@@ -36,8 +34,7 @@
           <button
             nz-button
             type="button"
-            (click)="setActiveUpload('defaultLocale')"
-          >
+            (click)="setActiveUpload('defaultLocale')">
             <span nz-icon nzType="upload"></span>
             Click to Upload
           </button>
@@ -55,17 +52,14 @@
     </nz-form-label>
     <div class="flex align-start justify-space-between gap-1">
       <nz-form-control
-        nzErrorTip="Please input locale informations or delete this field."
-      >
+        nzErrorTip="Please input locale informations or delete this field.">
         <nz-select
           [attr.id]="control.id"
-          [formControlName]="control.controlInstance"
-        >
+          [formControlName]="control.controlInstance">
           <nz-option
             *ngFor="let locale of locales"
             [nzValue]="locale.value"
-            [nzLabel]="locale.label"
-          ></nz-option>
+            [nzLabel]="locale.label"></nz-option>
         </nz-select>
       </nz-form-control>
 
@@ -76,8 +70,7 @@
             type="button"
             (click)="
               setActiveUpload(projectLocalesPathsControls[i].controlInstance)
-            "
-          >
+            ">
             <span nz-icon nzType="upload"></span>
             Click to Upload
           </button>
@@ -88,8 +81,7 @@
         nz-icon
         nzType="minus-circle-o"
         class="dynamic-delete-button"
-        (click)="removeField(control, $event)"
-      ></span>
+        (click)="removeField(control, $event)"></span>
     </div>
 
     <span
@@ -99,8 +91,7 @@
           control.controlInstance,
           projectLocalesPathsControls[i].controlInstance
         )
-      "
-    >
+      ">
       Path:
       {{ getControlValue(projectLocalesPathsControls[i].controlInstance) }}
     </span>
@@ -113,8 +104,7 @@
         nz-button
         nzType="dashed"
         class="w-100"
-        (click)="addField($event, null, null)"
-      >
+        (click)="addField($event, null, null)">
         <span nz-icon nzType="plus"></span>
         Add locale
       </button>
@@ -135,8 +125,7 @@
     nzType="primary"
     [disabled]="form.invalid || isEditingProject"
     type="submit"
-    [nzLoading]="isEditingProject"
-  >
+    [nzLoading]="isEditingProject">
     <span nz-icon nzType="edit" nzTheme="outline"></span>
     Edit project
   </button>

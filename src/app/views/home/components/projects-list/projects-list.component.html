@@ -1,14 +1,12 @@
 <nz-input-group
   class="search-container mt-1 mb-1"
-  [nzSuffix]="suffixIconSearch"
->
+  [nzSuffix]="suffixIconSearch">
   <input
     type="text"
     nz-input
     placeholder="Search by name, locale, etc"
     [(ngModel)]="searchTerm"
-    (ngModelChange)="searchProjects()"
-  />
+    (ngModelChange)="searchProjects()" />
 </nz-input-group>
 
 <ng-template #suffixIconSearch>
@@ -17,8 +15,7 @@
 
 <div *ngIf="isEmpty; else list" class="flex align-center justify-center mt-2">
   <app-empty
-    [title]="searchTerm ? 'No projects found' : 'You don’t have any project'"
-  >
+    [title]="searchTerm ? 'No projects found' : 'You don’t have any project'">
     <a routerLink="/create-project" *ngIf="!searchTerm">
       <button nz-button nzSize="large" nzType="primary">
         <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
@@ -33,8 +30,7 @@
     <div class="card" *ngFor="let project of projects">
       <app-project-card
         [project]="project"
-        (deleted)="deleteProject(project.id)"
-      ></app-project-card>
+        (deleted)="deleteProject(project.id)"></app-project-card>
     </div>
   </div>
 </ng-template>

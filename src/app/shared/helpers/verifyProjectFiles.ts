@@ -20,7 +20,7 @@ export function verifyProjectFiles(
       ...project.locales,
     ];
 
-    locales.forEach((locale) => {
+    locales.forEach(locale => {
       const exists = fs?.existsSync(locale.path);
 
       if (!exists) {
@@ -29,7 +29,7 @@ export function verifyProjectFiles(
         const file = fs.readFileSync(locale.path, 'utf8');
         const keys = Object.keys(JSON.parse(file));
 
-        const hasAllKeys = ['locale', 'translations'].every((key) =>
+        const hasAllKeys = ['locale', 'translations'].every(key =>
           keys.includes(key)
         );
 

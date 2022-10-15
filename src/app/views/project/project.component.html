@@ -40,8 +40,7 @@
 
         <div
           *ngFor="let message of projectFiles.errorsMessages"
-          class="status-danger"
-        >
+          class="status-danger">
           <span nz-icon nzType="alert" nzTheme="outline"></span>
           <span class="ml-05">{{ message }}</span>
         </div>
@@ -63,8 +62,7 @@
         type="button"
         nzType="primary"
         (click)="removeUnusedTranslations()"
-        [disabled]="projectFiles.hasErrors"
-      >
+        [disabled]="projectFiles.hasErrors">
         <span nz-icon nzType="delete-row" nzTheme="outline"></span>
         Remove unused translations
       </button>
@@ -75,8 +73,7 @@
         type="button"
         nzType="primary"
         (click)="orderTranslations()"
-        [disabled]="projectFiles.hasErrors"
-      >
+        [disabled]="projectFiles.hasErrors">
         <span nz-icon nzType="swap" nzTheme="outline"></span>
         Order translations
       </button>

@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { TranslateProjectRoutingModule } from './translate-project-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    TranslateProjectRoutingModule
-  ]
+  imports: [CommonModule, TranslateProjectRoutingModule],
 })
-export class TranslateProjectModule { }
+export class TranslateProjectModule {}

@@ -12,7 +12,7 @@ export function removeUnusedTranslations(project: Project) {
     const defaultTranslations = defaultLocaleJson.translations;
     const defaultTranslationsKeys = Object.keys(defaultTranslations);
 
-    project.locales.forEach((locale) => {
+    project.locales.forEach(locale => {
       try {
         const localeRawData = fs.readFileSync(locale.path, 'utf8');
         const localeJson = JSON.parse(localeRawData);
@@ -20,7 +20,7 @@ export function removeUnusedTranslations(project: Project) {
         const localeTranslationsKeys = Object.keys(localeTranslations);
 
         const unusedIds = localeTranslationsKeys.filter(
-          (key) => !defaultTranslationsKeys.includes(key)
+          key => !defaultTranslationsKeys.includes(key)
         );
 
         const newTranslations = {};
