@@ -26,9 +26,13 @@ import {
   DeleteOutline,
   TranslationOutline,
   AlertOutline,
+  DeleteRowOutline,
+  SwapOutline,
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
+  DeleteRowOutline,
+  SwapOutline,
   PlusOutline,
   PlusCircleOutline,
   HomeOutline,

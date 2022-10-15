@@ -1,0 +1,5 @@
+.buttons-block {
+  > button:not(:last-of-type) {
+    margin-bottom: 1rem;
+  }
+}
