@@ -2,7 +2,7 @@ import { Locale } from '../models/locale.model';
 import { Project } from '../models/project.model';
 const fs = window.require('fs');
 
-type IdentifyMissingData = {
+export type IdentifyMissingData = {
   locale: Locale;
   missingKeys: string[] | number[];
   missingTranslations: { key: string | number; translations: string[] }[];

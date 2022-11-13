@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import {
+  IdentifyMissingData,
+  identifyMissingTranslations,
+} from '../../shared/helpers/identifyMissingTranslations';
 import { orderTranslations } from '../../shared/helpers/orderTranslations';
 import { removeUnusedTranslations } from '../../shared/helpers/removeUnusedTranslations';
 import { verifyProjectFiles } from '../../shared/helpers/verifyProjectFiles';
@@ -15,6 +19,9 @@ import { ProjectService } from '../../shared/services/project/project.service';
 export class ProjectComponent implements OnInit {
   project: Project;
   projectFiles = { hasErrors: false, errorsMessages: [] };
+
+  isMissingTranslationsModalVisible = false;
+  missingTranslations: IdentifyMissingData = null;
 
   constructor(
     private projectService: ProjectService,
@@ -60,6 +67,25 @@ export class ProjectComponent implements OnInit {
     }
   }
 
+  showMissingTranslations() {
+    const missingTranslations = identifyMissingTranslations(this.project);
+    let hasMissingTranslations = false;
+
+    missingTranslations.forEach(missingTranslation => {
+      if (missingTranslation.missingKeys.length) {
+        hasMissingTranslations = true;
+        return;
+      }
+    });
+
+    if (hasMissingTranslations) {
+      this.toggleMissingTranslationsModal();
+      return;
+    }
+
+    this.messageService.info('No missing translation found');
+  }
+
   orderTranslations() {
     try {
       orderTranslations(this.project);
@@ -69,5 +95,10 @@ export class ProjectComponent implements OnInit {
         'An error has occurred when ordering. Please verify your translate files!'
       );
     }
+  }
+
+  toggleMissingTranslationsModal() {
+    this.isMissingTranslationsModalVisible =
+      !this.isMissingTranslationsModalVisible;
   }
 }

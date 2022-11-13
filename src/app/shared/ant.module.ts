@@ -5,6 +5,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { IconDefinition } from '@ant-design/icons-angular';
@@ -28,6 +29,7 @@ import {
   AlertOutline,
   DeleteRowOutline,
   SwapOutline,
+  StopOutline,
 } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -44,6 +46,7 @@ const icons: IconDefinition[] = [
   DeleteOutline,
   TranslationOutline,
   AlertOutline,
+  StopOutline,
 ];
 
 @NgModule({
@@ -63,6 +66,7 @@ const icons: IconDefinition[] = [
     NzCardModule,
     NzPopconfirmModule,
     NzDividerModule,
+    NzModalModule,
   ],
   exports: [
     NzButtonModule,
@@ -79,6 +83,7 @@ const icons: IconDefinition[] = [
     NzCardModule,
     NzPopconfirmModule,
     NzDividerModule,
+    NzModalModule,
   ],
 })
 export class AntModule {}
