@@ -21,7 +21,7 @@ export class ProjectComponent implements OnInit {
   projectFiles = { hasErrors: false, errorsMessages: [] };
 
   isMissingTranslationsModalVisible = false;
-  missingTranslations: IdentifyMissingData = null;
+  missingTranslations: IdentifyMissingData[] = null;
 
   constructor(
     private projectService: ProjectService,
@@ -79,6 +79,7 @@ export class ProjectComponent implements OnInit {
     });
 
     if (hasMissingTranslations) {
+      this.missingTranslations = missingTranslations;
       this.toggleMissingTranslationsModal();
       return;
     }

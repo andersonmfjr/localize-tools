@@ -92,16 +92,8 @@
   </app-page-container>
 </ng-container>
 
-<nz-modal
-  [(nzVisible)]="isMissingTranslationsModalVisible"
-  nzTitle="Missing translations"
-  nzCentered
-  [nzFooter]="null"
-  [nzStyle]="{ maxWidth: '60vw', width: '100%' }"
-  (nzOnCancel)="toggleMissingTranslationsModal()">
-  <ng-container *nzModalContent>
-    <p>Content one</p>
-    <p>Content two</p>
-    <p>Content three</p>
-  </ng-container>
-</nz-modal>
+<app-missing-translations-modal
+  [isVisible]="isMissingTranslationsModalVisible"
+  (closed)="toggleMissingTranslationsModal()"
+  [missingTranslations]="missingTranslations">
+</app-missing-translations-modal>

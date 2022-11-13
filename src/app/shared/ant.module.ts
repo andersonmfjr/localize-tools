@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzListModule } from 'ng-zorro-antd/list';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
@@ -12,6 +14,7 @@ import { IconDefinition } from '@ant-design/icons-angular';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -67,6 +70,9 @@ const icons: IconDefinition[] = [
     NzPopconfirmModule,
     NzDividerModule,
     NzModalModule,
+    NzTabsModule,
+    ScrollingModule,
+    NzListModule,
   ],
   exports: [
     NzButtonModule,
@@ -84,6 +90,9 @@ const icons: IconDefinition[] = [
     NzPopconfirmModule,
     NzDividerModule,
     NzModalModule,
+    NzTabsModule,
+    ScrollingModule,
+    NzListModule,
   ],
 })
 export class AntModule {}
