@@ -5,7 +5,7 @@ const fs = window.require('fs');
 export type IdentifyMissingData = {
   locale: Locale;
   missingKeys: string[] | number[];
-  missingTranslations: { key: string | number; translations: string[] }[];
+  missingTranslations: { key: string | number; translation: string }[];
 };
 
 export function identifyMissingTranslations(

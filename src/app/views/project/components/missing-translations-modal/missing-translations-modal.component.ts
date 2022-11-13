@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTabChangeEvent, NzTabPosition } from 'ng-zorro-antd/tabs';
+import { addTranslations } from '../../../../shared/helpers/addTranslations';
 import { IdentifyMissingData } from '../../../../shared/helpers/identifyMissingTranslations';
 import { Project } from '../../../../shared/models/project.model';
 
@@ -18,14 +20,13 @@ export class MissingTranslationsModalComponent {
   nzTabPosition: NzTabPosition = 'top';
   selectedIndex = 0;
 
-  constructor() {}
+  constructor(private messageService: NzMessageService) {}
 
   get currentLocale() {
     return this.missingTranslations[this.selectedIndex].locale;
   }
 
   onSelectChange(tabChange: NzTabChangeEvent) {
-    console.log(tabChange);
     this.selectedIndex = tabChange.index;
   }
 
@@ -33,7 +34,22 @@ export class MissingTranslationsModalComponent {
     console.log('here');
   }
 
-  addValuesAtEnd() {}
+  addValues(shouldOrder = false) {
+    const translations = {};
 
-  addValuesAndOrder() {}
+    this.missingTranslations[this.selectedIndex].missingTranslations.forEach(
+      missingTranslation => {
+        translations[missingTranslation.key] = missingTranslation.translation;
+      }
+    );
+
+    addTranslations(
+      this.project,
+      translations,
+      this.currentLocale.id,
+      shouldOrder
+    );
+
+    this.messageService.success('Values added successfully!');
+  }
 }
