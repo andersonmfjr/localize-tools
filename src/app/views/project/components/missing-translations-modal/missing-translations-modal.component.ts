@@ -1,9 +1,10 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTabChangeEvent, NzTabPosition } from 'ng-zorro-antd/tabs';
 import { addTranslations } from '../../../../shared/helpers/addTranslations';
 import { IdentifyMissingData } from '../../../../shared/helpers/identifyMissingTranslations';
 import { Project } from '../../../../shared/models/project.model';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-missing-translations-modal',
@@ -20,7 +21,10 @@ export class MissingTranslationsModalComponent {
   nzTabPosition: NzTabPosition = 'top';
   selectedIndex = 0;
 
-  constructor(private messageService: NzMessageService) {}
+  constructor(
+    private messageService: NzMessageService,
+    private clipboard: Clipboard
+  ) {}
 
   get currentLocale() {
     return this.missingTranslations[this.selectedIndex].locale;
@@ -31,17 +35,18 @@ export class MissingTranslationsModalComponent {
   }
 
   copyValues() {
-    console.log('here');
+    const translations = this.getTranslations();
+    const translationsToString = JSON.stringify(translations, null, '  ')
+      .replace('{', '')
+      .replace('}', '')
+      .concat(',');
+    this.clipboard.copy(translationsToString);
+
+    this.messageService.success('Values copied successfully!');
   }
 
   addValues(shouldOrder = false) {
-    const translations = {};
-
-    this.missingTranslations[this.selectedIndex].missingTranslations.forEach(
-      missingTranslation => {
-        translations[missingTranslation.key] = missingTranslation.translation;
-      }
-    );
+    const translations = this.getTranslations();
 
     addTranslations(
       this.project,
@@ -51,5 +56,17 @@ export class MissingTranslationsModalComponent {
     );
 
     this.messageService.success('Values added successfully!');
+  }
+
+  getTranslations() {
+    const translations = {};
+
+    this.missingTranslations[this.selectedIndex].missingTranslations.forEach(
+      missingTranslation => {
+        translations[missingTranslation.key] = missingTranslation.translation;
+      }
+    );
+
+    return translations;
   }
 }

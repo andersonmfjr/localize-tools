@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -71,7 +70,6 @@ const icons: IconDefinition[] = [
     NzDividerModule,
     NzModalModule,
     NzTabsModule,
-    ScrollingModule,
     NzListModule,
   ],
   exports: [
@@ -91,7 +89,6 @@ const icons: IconDefinition[] = [
     NzDividerModule,
     NzModalModule,
     NzTabsModule,
-    ScrollingModule,
     NzListModule,
   ],
 })

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import {
   EmptyComponent,
@@ -34,6 +36,8 @@ export function playerFactory() {
     ReactiveFormsModule,
     AntModule,
     LottieModule.forRoot({ player: playerFactory }),
+    ClipboardModule,
+    ScrollingModule,
   ],
   exports: [
     WebviewDirective,
@@ -41,6 +45,8 @@ export function playerFactory() {
     ReactiveFormsModule,
     LottieModule,
     AntModule,
+    ClipboardModule,
+    ScrollingModule,
     EmptyComponent,
     PageContainerComponent,
     BackButtonComponent,
