@@ -1,4 +1,4 @@
-[![Angular Logo](https://www.vectorlogo.zone/logos/angular/angular-icon.svg)](https://angular.io/) [![Electron Logo](https://www.vectorlogo.zone/logos/electronjs/electronjs-icon.svg)](https://electronjs.org/)
+[![Angular Logo](https://www.vectorlogo.zone/logos/angular/angular-icon.svg)](https://angular.io/)
 
 ![Maintained][maintained-badge]
 [![Make a pull request][prs-badge]][prs]
@@ -132,8 +132,8 @@ npm install
 
 There is an issue with `yarn` and `node_modules` when the application is built by the packager. Please use `npm` as dependencies manager.
 
-If you want to generate Angular components with Angular-cli , you **MUST** install `@angular/cli` in npm global context.
-Please follow [Angular-cli documentation](https://github.com/angular/angular-cli) if you had installed a previous version of `angular-cli`.
+If you want to generate Angular components with Angular CLI, you **MUST** install `@angular/cli` in npm global context.
+Please follow [Angular CLI documentation](https://github.com/angular/angular-cli) if you had installed a previous version of `angular-cli`.
 
 ``` bash
 npm install -g @angular/cli
@@ -145,8 +145,6 @@ npm install -g @angular/cli
 cd app/
 npm install
 ```
-
-Why two package.json ? This project follow [Electron Builder two package.json structure](https://www.electron.build/tutorials/two-package-structure) in order to optimize final bundle and be still able to use Angular `ng add` feature.
 
 ### To build for development
 
@@ -167,11 +165,11 @@ You can disable "Developer Tools" by commenting `win.webContents.openDevTools();
 
 ### How to import 3rd party libraries
 
-This sample project runs in both modes (web and electron). To make this work, **you have to import your dependencies the right way**. \
+This sample project runs in both modes (web and electron). To make this work, **you have to import your dependencies the right way**.
 
 There are two kind of 3rd party libraries :
 - NodeJS's one - Uses NodeJS core module (crypto, fs, util...)
-    - I suggest you add this kind of 3rd party library in `dependencies` of both `app/package.json` and `package.json (root folder)` in order to make it work in both Electron's Main process (app folder) and Electron's Renderer process (src folder).
+    - You should add this kind of 3rd party library in `dependencies` of both `app/package.json` and `package.json (root folder)` in order to make it work in both Electron's Main process (app folder) and Electron's Renderer process (src folder).
 
 Please check `providers/electron.service.ts` to watch how conditional import of libraries has to be done when using NodeJS / 3rd party libraries in renderer context (i.e. Angular).
 
@@ -180,8 +178,7 @@ Please check `providers/electron.service.ts` to watch how conditional import of 
 
 ### Add a dependency with ng-add
 
-You may encounter some difficulties with `ng-add` because this project doesn't use the defaults `@angular-builders`. \
-For example you can find [here](HOW_TO.md) how to install Angular-Material with `ng-add`.
+You may encounter some difficulties with `ng-add` because this project doesn't use the defaults `@angular-builders`.
 
 ### Browser mode
 
