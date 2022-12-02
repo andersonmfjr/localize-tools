@@ -13,7 +13,6 @@ import { Clipboard } from '@angular/cdk/clipboard';
 })
 export class MissingTranslationsModalComponent {
   @Input() missingTranslations: IdentifyMissingData[];
-  @Input() isVisible = false;
   @Input() project: Project;
 
   @Output() closed = new EventEmitter<void>();
@@ -68,5 +67,9 @@ export class MissingTranslationsModalComponent {
     );
 
     return translations;
+  }
+
+  getHtmlTranslation(translation: string) {
+    return `"${translation}"`;
   }
 }

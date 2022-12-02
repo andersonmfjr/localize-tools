@@ -1,5 +1,5 @@
 <nz-modal
-  [(nzVisible)]="isVisible"
+  nzVisible
   nzTitle="Missing translations"
   nzCentered
   [nzFooter]="modalFooter"
@@ -27,7 +27,11 @@
               <div class="flex">
                 <span class="bold">{{ missingTranslation.key }}</span
                 >:
-                <span class="ml-05">{{ missingTranslation.translation }}</span>
+                <span
+                  class="ml-05"
+                  [innerHTML]="
+                    getHtmlTranslation(missingTranslation.translation)
+                  "></span>
               </div>
             </nz-list-item>
           </nz-list>

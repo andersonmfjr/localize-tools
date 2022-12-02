@@ -93,7 +93,7 @@
 </ng-container>
 
 <app-missing-translations-modal
-  [isVisible]="isMissingTranslationsModalVisible"
+  *ngIf="isMissingTranslationsModalVisible"
   (closed)="toggleMissingTranslationsModal()"
   [missingTranslations]="missingTranslations"
   [project]="project">
