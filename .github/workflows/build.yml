@@ -24,7 +24,7 @@ jobs:
         uses: cycjimmy/semantic-release-action@v3
         id: semantic
         with:
-          semantic_version: 16
+          semantic_version: 18
           extra_plugins: |
             conventional-changelog-eslint
           branches: |

@@ -1,0 +1,57 @@
+<nz-modal
+  nzVisible
+  nzTitle="Missing translations"
+  nzCentered
+  [nzFooter]="modalFooter"
+  [nzStyle]="{ maxWidth: '60vw', width: '100%' }"
+  (nzOnCancel)="closed.emit()"
+  nzClassName="missing-modal">
+  <ng-container *nzModalContent>
+    <nz-tabset
+      [nzTabPosition]="nzTabPosition"
+      [(nzSelectedIndex)]="selectedIndex"
+      (nzSelectChange)="onSelectChange($event)">
+      <nz-tab
+        *ngFor="let translation of missingTranslations"
+        [nzTitle]="translation.locale.name">
+        <cdk-virtual-scroll-viewport itemSize="50" class="scroll-container">
+          <app-empty
+            *ngIf="!translation.missingKeys.length"
+            title="No missing translations"></app-empty>
+
+          <nz-list>
+            <nz-list-item
+              *cdkVirtualFor="
+                let missingTranslation of translation.missingTranslations
+              ">
+              <div class="flex">
+                <span class="bold">{{ missingTranslation.key }}</span
+                >:
+                <span
+                  class="ml-05"
+                  [innerHTML]="
+                    getHtmlTranslation(missingTranslation.translation)
+                  "></span>
+              </div>
+            </nz-list-item>
+          </nz-list>
+        </cdk-virtual-scroll-viewport>
+      </nz-tab>
+    </nz-tabset>
+  </ng-container>
+
+  <ng-template #modalFooter>
+    <span class="mr-05">{{ currentLocale.name }}:</span>
+    <button nz-button nzType="primary" (click)="copyValues()">
+      Copy values
+    </button>
+
+    <button nz-button nzType="primary" (click)="addValues()">
+      Add values at end of file
+    </button>
+
+    <button nz-button nzType="primary" (click)="addValues(true)">
+      Add values to file and order
+    </button>
+  </ng-template>
+</nz-modal>

@@ -72,6 +72,17 @@
         nzSize="large"
         type="button"
         nzType="primary"
+        (click)="showMissingTranslations()"
+        [disabled]="projectFiles.hasErrors">
+        <span nz-icon nzType="stop" nzTheme="outline"></span>
+        Show missing translations
+      </button>
+
+      <button
+        nz-button
+        nzSize="large"
+        type="button"
+        nzType="primary"
         (click)="orderTranslations()"
         [disabled]="projectFiles.hasErrors">
         <span nz-icon nzType="swap" nzTheme="outline"></span>
@@ -80,3 +91,10 @@
     </div>
   </app-page-container>
 </ng-container>
+
+<app-missing-translations-modal
+  *ngIf="isMissingTranslationsModalVisible"
+  (closed)="toggleMissingTranslationsModal()"
+  [missingTranslations]="missingTranslations"
+  [project]="project">
+</app-missing-translations-modal>

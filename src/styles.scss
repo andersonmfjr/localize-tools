@@ -95,10 +95,24 @@ body {
   margin-left: 0.5rem;
 }
 
+.mr-1 {
+  margin-right: 1rem;
+}
+
+.mr-05 {
+  margin-right: 0.5rem;
+}
+
 .text-center {
   text-align: center;
 }
 
 .status-danger {
   color: #dc3545;
+}
+
+.missing-modal {
+  .ant-modal-body {
+    padding-top: 0;
+  }
 }
