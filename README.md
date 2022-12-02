@@ -112,11 +112,11 @@ Currently runs with:
 - Angular v14.0.6
 - Electron v19.0.8
 
-With this sample, you can:
+You can:
 
-- Run your app in a local development environment with Electron & Hot reload
-- Run your app in a production environment
-- Package your app into an executable file for Linux, Windows & Mac
+- Run app in a local development environment with Electron & Hot reload
+- Run app in a production environment
+- Package app into an executable file for Linux, Windows & Mac
 
 /!\ Hot reload only pertains to the renderer process. The main electron process is not able to be hot reloaded, only restarted.
 
